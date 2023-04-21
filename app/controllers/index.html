@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+</head>
+<body>
+    <script>
+        let soc;
+        function sendMessage() {
+            console.log(1);
+            let receiverId = document.getElementById("friendName").value;
+            let message = document.getElementById("msg").value;
+            soc.emit("send-message", {receiverId, message});
+        }
+        function clickHere(){
+            const token = document.getElementById('token').value;
+            const socket = io('http://0.0.0.0:4000',{auth:{token}});
+            soc = socket;
+       
+       socket.on('userName',(data)=>{
+           document.getElementById('heading1').innerHTML=`Welcome:${data}`;
+       })
+       
+    //    socket.on('user_details',(data)=>{
+    //        document.getElementById('paragraph').innerHTML=JSON.stringify(data);
+    //    })
+      
+      
+    //    socket.on('message',(val)=>{
+    //        document.getElementById('heading').innerHTML+=`${val.sender}:${val.message}<br>`;
+    //    })
+    //     }
+
+    //     function sendMessage(){
+    //        const friendId = document.getElementById('friendName').value;
+    //        const msg = document.getElementById('msg').value;
+    //        soc.emit('sendDetails',{id:friendId,message:msg});
+    //    }
+        // function showFriends (){
+        //    soc.emit('showUsers',"users show kro");
+        // }   
+       }
+       
+
+    </script>
+    <input type="text" placeholder="Enter the token" id="token">
+    <button onclick="clickHere()">Click Here </button>
+    <h1 id="heading1"></h1>
+    <button onclick="showFriends()">Show Friends</button>
+    <br><br>
+<input type="text" id="friendName" placeholder="Enter friends Id">
+<input type="text" id="msg" placeholder="Enter Message">
+<button onclick="sendMessage()">sendMessage</button>  
+<h1 id="heading"></h1>
+<p id="paragraph"></p>
+
+</body>
+</html>
